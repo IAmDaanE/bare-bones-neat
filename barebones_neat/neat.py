@@ -1,5 +1,6 @@
 import random
 import math
+from .genome import Genome
 
 class NEAT:
     def __init__(self, population_size, input_size, output_size, crossover_chance, new_node_chance, new_connection_chance, change_weight_chance, change_bias_chance, mutation_power, similarity_treshold, excess_mult, disjoint_mult, weight_dif_mult):
