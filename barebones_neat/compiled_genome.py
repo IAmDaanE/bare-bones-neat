@@ -1,3 +1,5 @@
+import math
+
 class CompiledGenome:
     def __init__(self, conns, weights, biases):
         self.conns = conns          # lijst van tuples: (from_node, to_node)
