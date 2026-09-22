@@ -51,7 +51,7 @@ class CompiledGenome:
                 outputs.append(node_values[out_id])
         raw_outputs = outputs[:(len(self.biases) - input_size)]
         if self.use_softmax:
-            return softmax(raw_outputs)
+            return self.softmax(raw_outputs)
         else:
             return raw_outputs
     
