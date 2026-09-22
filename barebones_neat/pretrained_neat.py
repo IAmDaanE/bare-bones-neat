@@ -2,7 +2,7 @@ from .compiled_genome import CompiledGenome
 import json
 
 class PreTrainedNEAT:
-    def __init__(model_location):
+    def __init__(model_location, use_softmax):
         conns_lib = {}
         weights_lib = {}
         biases_lib = {}
@@ -15,7 +15,7 @@ class PreTrainedNEAT:
         conns = conns_lib["conns"]
         weights = weights_lib["weights"]
         biases = biases_lib["biases"]
-        self.compiled_genome = CompiledGenome(conns, weights, biases)
+        self.compiled_genome = CompiledGenome(conns, weights, biases, use_softmax)
     
     def forward(self, inputs):
         return self.compiled_genome.forward(inputs)

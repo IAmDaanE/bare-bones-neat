@@ -1,10 +1,17 @@
 import math
 
 class CompiledGenome:
-    def __init__(self, conns, weights, biases):
+    def __init__(self, conns, weights, biases, use_softmax):
         self.conns = conns          # lijst van tuples: (from_node, to_node)
         self.weights = weights      # dict: (from_node, to_node): weight
         self.biases = biases        # dict: node_id: bias_value
+        self.use_softmax = use_softmax      # boolean
+        
+    def softmax(self, inputs):
+        max_val = max(lijst)
+        exp_waarden = [math.exp(x - max_val) for x in lijst]
+        som_exp = sum(exp_waarden)
+        return [geexp / som_exp for geexp in exp_waarden]
 
     def forward(self, inputs):
         input_size = len(inputs)
@@ -42,7 +49,11 @@ class CompiledGenome:
             out_id = input_size + q + 1
             if out_id in node_values:
                 outputs.append(node_values[out_id])
-        return outputs[:(len(self.biases) - input_size)]
+        raw_outputs = outputs[:(len(self.biases) - input_size)]
+        if self.use_softmax:
+            return softmax(raw_outputs)
+        else:
+            return raw_outputs
     
     def visualize(self, x, y, width, height):
         pass

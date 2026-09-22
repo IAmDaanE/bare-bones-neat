@@ -4,7 +4,7 @@ from .genome import Genome
 from .compiled_genome import CompiledGenome
 
 class NEAT:
-    def __init__(self, population_size, input_size, output_size, crossover_chance, new_node_chance, new_connection_chance, change_weight_chance, change_bias_chance, mutation_power, similarity_treshold, excess_mult, disjoint_mult, weight_dif_mult):
+    def __init__(self, population_size, input_size, output_size, crossover_chance, new_node_chance, new_connection_chance, change_weight_chance, change_bias_chance, mutation_power, similarity_treshold, excess_mult, disjoint_mult, weight_dif_mult, use_softmax):
         self.population_size = population_size
         self.input_size = input_size
         self.output_size = output_size
@@ -18,6 +18,7 @@ class NEAT:
         self.excess_mult = excess_mult
         self.disjoint_mult = disjoint_mult
         self.weight_dif_mult = weight_dif_mult
+        self.use_softmax = use_softmax
         self.chances = {
             "crossover": crossover_chance, 
             "clone": 100 - crossover_chance, 
@@ -49,7 +50,7 @@ class NEAT:
                 gc = dictionary["genome_class"]
                 current_conns = [(g.from_node_id, g.to_node_id) for g in gc.connections.values() if g.enabled]
                 current_weights = {(g.from_node_id, g.to_node_id): g.weight for g in gc.connections.values() if g.enabled}
-                dictionary["compiled_genome_class"] = CompiledGenome(current_conns, current_weights, gc.biases.copy())
+                dictionary["compiled_genome_class"] = CompiledGenome(current_conns, current_weights, gc.biases.copy(), self.use_softmax)
 
     def assign_representatives(self):
         for specie in self.species:
