@@ -8,8 +8,8 @@ class CompiledGenome:
         self.use_softmax = use_softmax      # boolean
         
     def softmax(self, inputs):
-        max_val = max(lijst)
-        exp_waarden = [math.exp(x - max_val) for x in lijst]
+        max_val = max(inputs)
+        exp_waarden = [math.exp(x - max_val) for x in inputs]
         som_exp = sum(exp_waarden)
         return [geexp / som_exp for geexp in exp_waarden]
 
