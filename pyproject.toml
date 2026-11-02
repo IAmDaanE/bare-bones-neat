@@ -2,6 +2,12 @@
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.setuptools.package-data]
+"barebones_neat.assets" = ["*.ttf", "*.otf"]
+
 [project]
 name = "barebones_neat"
-version = "1.2.0"
+version = "1.2.1"

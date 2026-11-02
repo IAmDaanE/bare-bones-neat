@@ -1,10 +1,12 @@
 import pygame
+from utils import load_font
 
 class Visualization:
     def __init__(self, env_width, env_height, screen):
         self.env_width = env_width
         self.env_height = env_height
         self.screen = screen
+        self.font = load_font("JetBrainsMono-Regular")
 
     def draw_ui_shell(self):
         pass
