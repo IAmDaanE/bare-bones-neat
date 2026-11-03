@@ -40,7 +40,7 @@ class NEAT:
             self.species[0].append({
                 "genome_class": genome_class, 
                 "fitness_score": 0, 
-                "compiled_genome_class": CompiledGenome(init_conns, init_weights, genome_class.biases.copy(), self.use_softmax), 
+                "compiled_genome_class": CompiledGenome(init_conns, init_weights, genome_class.biases.copy(), self.use_softmax, genome_class.nodes), 
             })
         self.representatives = []
 
