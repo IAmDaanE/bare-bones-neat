@@ -1,5 +1,5 @@
 import pygame
-from utils import load_font
+from .utils import load_font
 from collections import defaultdict, deque
 
 def calculate_network_layers(inputs, outputs, connections):
