@@ -90,7 +90,7 @@ class TrainingVisualization:
             pygame.draw.line(network_surface, color, node_cords[from_node], node_cords[to_node], line_thickness)
         node_radius = 6
         for node_id, cord in node_cords.items():
-            pygame.draw.circle(network_surface, (255, 255, 255), cord, node_radius, width=2)
+            pygame.draw.circle(network_surface, (0, 0, 0), cord, node_radius, width=2)
                     
     def draw_info(self, neat_class, info_surface):
         population_size = neat_class.population_size
@@ -105,10 +105,10 @@ class TrainingVisualization:
         network_surface = pygame.Surface((420, 140))
         network_surface.fill((255, 255, 255))
         self.draw_network(compiled_genome, network_surface, 10, 10)
-        info_surface = pygame.Surface((self.env_width - 3 * 20 - 350, 140))
+        info_surface = pygame.Surface((self.env_width - 3 * 20 - 420, 140))
         self.draw_info(neat_class, info_surface)
         self.screen.blit(network_surface, (0, self.env_height))
-        self.screen.blit(network_surface, (420, self.env_height))
+        self.screen.blit(info_surface, (420, self.env_height))
         self.draw_ui_shell()
 
 class InferenceVisualization:
