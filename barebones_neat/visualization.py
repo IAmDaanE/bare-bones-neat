@@ -100,7 +100,7 @@ class TrainingVisualization:
         info_surface.blit(population_size_text, (8, 20))
         info_surface.blit(amount_species_text, (8, 60))
 
-    def full_draw(compiled_genome, neat_class, self):
+    def full_draw(self, compiled_genome, neat_class):
         self.screen.fill((255, 255, 255))
         network_surface = pygame.Surface((350, 100))
         self.draw_network(compiled_genome, network_surface)
