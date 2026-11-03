@@ -103,7 +103,7 @@ class TrainingVisualization:
     def full_draw(self, compiled_genome, neat_class):
         self.screen.fill((255, 255, 255))
         network_surface = pygame.Surface((350, 100))
-        self.draw_network(compiled_genome, network_surface)
+        self.draw_network(compiled_genome, network_surface, 10)
         info_surface = pygame.Surface((self.env_width - 3 * 20 - 350, 100))
         self.draw_info(neat_class, info_surface)
         self.draw_ui_shell()
