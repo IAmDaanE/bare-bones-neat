@@ -86,7 +86,7 @@ class TrainingVisualization:
             to_node = conn[1]
             weight = compiled_genome.weights[conn]
             line_thickness = max(1, int(abs(weight) * 7))
-            color = (255, 255, 255) if weight > 0 else (0, 134, 212)
+            color = (0, 0, 0) if weight < 0 else (0, 134, 212)
             pygame.draw.line(network_surface, color, node_cords[from_node], node_cords[to_node], line_thickness)
         node_radius = 6
         for node_id, cord in node_cords.items():
@@ -103,11 +103,12 @@ class TrainingVisualization:
     def full_draw(self, compiled_genome, neat_class):
         self.screen.fill((255, 255, 255))
         network_surface = pygame.Surface((420, 140))
+        network_surface.fill(255, 255, 255)
         self.draw_network(compiled_genome, network_surface, 10, 10)
         info_surface = pygame.Surface((self.env_width - 3 * 20 - 350, 140))
         self.draw_info(neat_class, info_surface)
-        self.screen.blit(network_surface, (self.env_height, 0))
-        self.screen.blit(network_surface, (self.env_height, 420))
+        self.screen.blit(network_surface, (0, self.env_height))
+        self.screen.blit(network_surface, (420, self.env_height))
         self.draw_ui_shell()
 
 class InferenceVisualization:
