@@ -38,7 +38,7 @@ class TrainingVisualization:
         self.env_width = env_width
         self.env_height = env_height
         self.screen = screen
-        self.font = load_font("JetBrainsMono-Regular")
+        self.font = load_font("JetBrainsMono-Regular", 18)
 
     def draw_ui_shell(self):
         pygame.draw.rect(self.screen, (0, 2, 61), (0, self.env_height, self.screen.get_width(), 2))
