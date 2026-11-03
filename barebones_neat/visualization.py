@@ -44,7 +44,7 @@ class TrainingVisualization:
         pygame.draw.rect(self.screen, (0, 2, 61), (0, self.env_height, self.screen.get_width(), 2))
         pygame.draw.rect(self.screen, (0, 2, 61), (350, self.env_height, 2, self.screen.get_height() - self.env_height))
 
-    def draw_network(compiled_genome, network_surface, hor_padding, method="stretched"):
+    def draw_network(compiled_genome, network_surface, hor_padding, vert_padding, method="stretched"):
         input_nodes = []
         output_nodes = []
         for node in compiled_genome.nodes:
@@ -53,8 +53,45 @@ class TrainingVisualization:
             if node[1] == "out":
                 output_nodes.append(node[0])
         layers = calculate_network_layers(input_nodes, output_nodes, compiled_genome.conns)
-        node_cords = {}
-
+        node_cords = {} # node id: (x, y)
+        amount_layers = len(layers)
+        layer_gap = (network_surface.get_width() - hor_padding * 2) / amount_layers - 1
+        if method == "stretched":
+            for q, layer in enumerate(layers):
+                node_gap = (network_surface.get_height() - 2 * vert_padding) / len(layer) - 1
+                for i, node in enumerate(layer):
+                    x = hor_padding + layer_gap * q
+                    y = 0
+                    if len(layer) == 1:
+                        y = network_surface.get_height() / 2
+                    else:
+                        y = vert_padding + node_gap * i
+                    node_cords[node] = (x, y)
+        elif method == "proportional":
+            biggest_layer_size = len(max(layers, key=len))
+            node_gap = (network_surface.get_height() - 2 * vert_padding) / biggest_layer_size - 1
+            for q, layer in enumerate(layers):
+                for i, node in enumerate(layer):
+                    x = hor_padding + layer_gap * q
+                    y = 0
+                    if len(layer) == 1:
+                        y = network_surface.get_height() / 2
+                    else:
+                        y = vert_padding + node_gap * i
+                    node_cords[node] = (x, y)
+        else:
+            raise ValueError("This method does not exist, choose either stretched or proportional.")
+        for conn in compiled_genome.conns:
+            from_node = conn[0]
+            to_node = conn[1]
+            weight = compiled_genome.weights[conn]
+            line_thickness = max(1, int(abs(weight) * 7))
+            color = (255, 255, 255) if weight > 0 else (0, 134, 212)
+            pygame.draw.line(network_surface, color, node_cords[from_node], node_cords[to_node], line_thickness)
+        node_radius = 6
+        for node_id, cord in node_cords.items():
+            pygame.draw.circle(network_surface, (255, 255, 255), cord, node_radius, width=2)
+                    
     def draw_info(self, neat_class, info_surface):
         population_size = neat_class.population_size
         population_size_text = self.font.render(f"population: {population_size}", True, (0, 2, 61))
