@@ -38,7 +38,7 @@ class TrainingVisualization:
         self.env_width = env_width
         self.env_height = env_height
         self.screen = screen
-        self.font = load_font("JetBrainsMono-Regular", 18)
+        self.font = load_font("JetBrainsMono-Regular", 16)
 
     def draw_ui_shell(self):
         pygame.draw.rect(self.screen, (0, 2, 61), (0, self.env_height, self.screen.get_width(), 2))
@@ -103,9 +103,10 @@ class TrainingVisualization:
     def full_draw(self, compiled_genome, neat_class):
         self.screen.fill((255, 255, 255))
         network_surface = pygame.Surface((420, 140))
-        network_surface.fill((255, 255, 255))
+        network_surface.fill((255, 0, 0))
         self.draw_network(compiled_genome, network_surface, 10, 10)
         info_surface = pygame.Surface((self.env_width - 3 * 20 - 420, 140))
+        info_surface.fill((255, 0, 0))
         self.draw_info(neat_class, info_surface)
         self.screen.blit(network_surface, (0, self.env_height))
         self.screen.blit(info_surface, (420, self.env_height))
