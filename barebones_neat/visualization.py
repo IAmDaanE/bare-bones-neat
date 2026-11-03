@@ -44,7 +44,7 @@ class TrainingVisualization:
         pygame.draw.rect(self.screen, (0, 2, 61), (0, self.env_height, self.screen.get_width(), 2))
         pygame.draw.rect(self.screen, (0, 2, 61), (350, self.env_height, 2, self.screen.get_height() - self.env_height))
 
-    def draw_network(compiled_genome, network_surface, hor_padding, vert_padding, method="stretched"):
+    def draw_network(self, compiled_genome, network_surface, hor_padding, vert_padding, method="stretched"):
         input_nodes = []
         output_nodes = []
         for node in compiled_genome.nodes:
