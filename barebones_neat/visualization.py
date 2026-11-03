@@ -42,7 +42,7 @@ class TrainingVisualization:
 
     def draw_ui_shell(self):
         pygame.draw.rect(self.screen, (0, 2, 61), (0, self.env_height, self.screen.get_width(), 2))
-        pygame.draw.rect(self.screen, (0, 2, 61), (350, self.env_height, 2, self.screen.get_height() - self.env_height))
+        pygame.draw.rect(self.screen, (0, 2, 61), (420, self.env_height, 2, self.screen.get_height() - self.env_height))
 
     def draw_network(self, compiled_genome, network_surface, hor_padding, vert_padding, method="stretched"):
         input_nodes = []
@@ -102,10 +102,12 @@ class TrainingVisualization:
 
     def full_draw(self, compiled_genome, neat_class):
         self.screen.fill((255, 255, 255))
-        network_surface = pygame.Surface((350, 100))
+        network_surface = pygame.Surface((420, 140))
         self.draw_network(compiled_genome, network_surface, 10, 10)
-        info_surface = pygame.Surface((self.env_width - 3 * 20 - 350, 100))
+        info_surface = pygame.Surface((self.env_width - 3 * 20 - 350, 140))
         self.draw_info(neat_class, info_surface)
+        self.screen.blit(network_surface, (self.env_height, 0))
+        self.screen.blit(network_surface, (self.env_height, 420))
         self.draw_ui_shell()
 
 class InferenceVisualization:
