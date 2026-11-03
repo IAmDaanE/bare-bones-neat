@@ -50,7 +50,7 @@ class NEAT:
                 gc = dictionary["genome_class"]
                 current_conns = [(g.from_node_id, g.to_node_id) for g in gc.connections.values() if g.enabled]
                 current_weights = {(g.from_node_id, g.to_node_id): g.weight for g in gc.connections.values() if g.enabled}
-                dictionary["compiled_genome_class"] = CompiledGenome(current_conns, current_weights, gc.biases.copy(), self.use_softmax)
+                dictionary["compiled_genome_class"] = CompiledGenome(current_conns, current_weights, gc.biases.copy(), self.use_softmax, gc.nodes)
 
     def assign_representatives(self):
         for specie in self.species:
