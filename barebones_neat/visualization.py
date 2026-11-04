@@ -45,6 +45,8 @@ class TrainingVisualization:
         pygame.draw.rect(self.screen, (0, 2, 61), (420, self.env_height, 2, self.screen.get_height() - self.env_height))
 
     def draw_network(self, compiled_genome, network_surface, hor_padding, vert_padding, method="stretched"):
+        width = 420
+        height = 140
         input_nodes = []
         output_nodes = []
         for node in compiled_genome.nodes:
@@ -55,27 +57,27 @@ class TrainingVisualization:
         layers = calculate_network_layers(input_nodes, output_nodes, compiled_genome.conns)
         node_cords = {} # node id: (x, y)
         amount_layers = len(layers)
-        layer_gap = (network_surface.get_width() - hor_padding * 2) / amount_layers - 1
+        layer_gap = (width - hor_padding * 2) / amount_layers - 1
         if method == "stretched":
             for q, layer in enumerate(layers):
-                node_gap = (network_surface.get_height() - 2 * vert_padding) / len(layer) - 1
+                node_gap = (height - 2 * vert_padding) / len(layer) - 1
                 for i, node in enumerate(layer):
                     x = hor_padding + layer_gap * q
                     y = 0
                     if len(layer) == 1:
-                        y = network_surface.get_height() / 2
+                        y = height / 2
                     else:
                         y = vert_padding + node_gap * i
                     node_cords[node] = (x, y)
         elif method == "proportional":
             biggest_layer_size = len(max(layers, key=len))
-            node_gap = (network_surface.get_height() - 2 * vert_padding) / biggest_layer_size - 1
+            node_gap = (height - 2 * vert_padding) / biggest_layer_size - 1
             for q, layer in enumerate(layers):
                 for i, node in enumerate(layer):
                     x = hor_padding + layer_gap * q
                     y = 0
                     if len(layer) == 1:
-                        y = network_surface.get_height() / 2
+                        y = height / 2
                     else:
                         y = vert_padding + node_gap * i
                     node_cords[node] = (x, y)
@@ -86,7 +88,7 @@ class TrainingVisualization:
             to_node = conn[1]
             weight = compiled_genome.weights[conn]
             line_thickness = max(1, int(abs(weight) * 7))
-            color = (0, 0, 0) if weight < 0 else (0, 134, 212)
+            color = (0, 2, 61) if weight < 0 else (0, 134, 212)
             pygame.draw.line(network_surface, color, node_cords[from_node], node_cords[to_node], line_thickness)
         node_radius = 6
         for node_id, cord in node_cords.items():
@@ -103,10 +105,10 @@ class TrainingVisualization:
     def full_draw(self, compiled_genome, neat_class):
         self.screen.fill((255, 255, 255))
         network_surface = pygame.Surface((420, 140))
-        network_surface.fill((255, 0, 0))
-        self.draw_network(compiled_genome, network_surface, 10, 10)
-        info_surface = pygame.Surface((self.env_width - 3 * 20 - 420, 140))
-        info_surface.fill((255, 0, 0))
+        network_surface.fill((255, 255, 255))
+        self.draw_network(compiled_genome, network_surface, 20, 20)
+        info_surface = pygame.Surface((self.env_width - 420, 140))
+        info_surface.fill((255, 255, 255))
         self.draw_info(neat_class, info_surface)
         self.screen.blit(network_surface, (0, self.env_height))
         self.screen.blit(info_surface, (420, self.env_height))
