@@ -19,6 +19,7 @@ class NEAT:
         self.disjoint_mult = disjoint_mult
         self.weight_dif_mult = weight_dif_mult
         self.use_softmax = use_softmax
+        self.mutation_power = mutation_power
         self.chances = {
             "crossover": crossover_chance, 
             "clone": 100 - crossover_chance, 
@@ -34,7 +35,7 @@ class NEAT:
                 self.next_innovation_num += 1
         self.species = [[]]
         for i in range(population_size):
-            genome_class = Genome(self.input_size, self.output_size, self.chances, mutation_power)
+            genome_class = Genome(self.input_size, self.output_size, self.chances, self.mutation_power)
             init_conns = [(g.from_node_id, g.to_node_id) for g in genome_class.connections.values()]
             init_weights = {(g.from_node_id, g.to_node_id): g.weight for g in genome_class.connections.values()}
             self.species[0].append({
