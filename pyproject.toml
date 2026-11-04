@@ -10,4 +10,4 @@ where = ["."]
 
 [project]
 name = "barebones_neat"
-version = "1.2.14"
+version = "1.2.15"

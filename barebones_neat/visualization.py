@@ -57,10 +57,10 @@ class TrainingVisualization:
         layers = calculate_network_layers(input_nodes, output_nodes, compiled_genome.conns)
         node_cords = {} # node id: (x, y)
         amount_layers = len(layers)
-        layer_gap = (width - hor_padding * 2) / amount_layers - 1
+        layer_gap = (width - hor_padding * 2) / amount_layers - 2
         if method == "stretched":
             for q, layer in enumerate(layers):
-                node_gap = (height - 2 * vert_padding) / len(layer) - 1
+                node_gap = (height - 2 * vert_padding) / len(layer) - 2
                 for i, node in enumerate(layer):
                     x = hor_padding + layer_gap * q
                     y = 0
@@ -71,7 +71,7 @@ class TrainingVisualization:
                     node_cords[node] = (x, y)
         elif method == "proportional":
             biggest_layer_size = len(max(layers, key=len))
-            node_gap = (height - 2 * vert_padding) / biggest_layer_size - 1
+            node_gap = (height - 2 * vert_padding) / biggest_layer_size - 2
             for q, layer in enumerate(layers):
                 for i, node in enumerate(layer):
                     x = hor_padding + layer_gap * q
@@ -96,11 +96,22 @@ class TrainingVisualization:
                     
     def draw_info(self, neat_class, info_surface):
         population_size = neat_class.population_size
-        population_size_text = self.font.render(f"population: {population_size}", True, (0, 2, 61))
+        population_size_text = self.font.render(f"Population: {population_size}", True, (0, 2, 61))
         amount_species = len(neat_class.species)
-        amount_species_text = self.font.render(f"amount species: {amount_species}", True, (0, 2, 61))
-        info_surface.blit(population_size_text, (8, 20))
-        info_surface.blit(amount_species_text, (8, 60))
+        amount_species_text = self.font.render(f"Amount Species: {amount_species}", True, (0, 2, 61))
+        similarity_treshold = neat_class.similarity_treshold
+        similarity_treshold_text = self.font.render(f"Sim Treshold: {similarity_treshold}", True, (0, 2, 61))
+        mutation_power = neat_class.mutation_power
+        mutation_power_text = self.font.render(f"Mutation: {mutation_power}", True, (0, 2, 61))
+        new_node_chance  = neat_class.changes["new_node"]
+        new_node_chance_text = self.font.render(f"Node Chance: {new_node_chance}", True, (0, 2, 61))
+        side_padding = 6
+        between_padding = 27
+        info_surface.blit(population_size_text, (8, side_padding))
+        info_surface.blit(amount_species_text, (8, side_padding + between_padding))
+        info_surface.blit(similarity_treshold_text, (8, side_padding + between_padding * 2))
+        info_surface.blit(mutation_power_text, (8, side_padding + between_padding * 3))
+        info_surface.blit(new_node_chance_text, (8, side_padding + between_padding * 4))
 
     def full_draw(self, compiled_genome, neat_class):
         self.screen.fill((255, 255, 255))
