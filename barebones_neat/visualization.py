@@ -2,8 +2,6 @@ import pygame
 from .utils import load_font
 from collections import defaultdict, deque
 
-from collections import defaultdict, deque
-
 def calculate_network_layers(inputs, outputs, connections):
     graph = defaultdict(list)
     for src, dst in connections:
@@ -24,7 +22,7 @@ def calculate_network_layers(inputs, outputs, connections):
             if neighbor not in layers_dict or new_layer > layers_dict[neighbor]:
                 layers_dict[neighbor] = new_layer
             if neighbor not in processed:
-                queue.append(neighbor) 
+                queue.append(neighbor)       
     all_nodes = set(inputs) | set(outputs) | {u for u, v in connections} | {v for u, v in connections}
     for node in all_nodes:
         if node not in layers_dict:
@@ -32,7 +30,11 @@ def calculate_network_layers(inputs, outputs, connections):
     max_hidden_layer = max([layers_dict[n] for n in layers_dict if n not in outputs], default=0)
     for out_node in outputs:
         layers_dict[out_node] = max_hidden_layer + 1
-    num_layers = max(layers_dict.values()) + 1
+    unique_assigned_layers = sorted(list(set(layers_dict.values())))    
+    layer_mapping = {old_idx: new_idx for new_idx, old_idx in enumerate(unique_assigned_layers)}    
+    for node in layers_dict:
+        layers_dict[node] = layer_mapping[layers_dict[node]]        
+    num_layers = len(unique_assigned_layers)
     nested_layers = [[] for _ in range(num_layers)]
     for node, layer_idx in layers_dict.items():
         nested_layers[layer_idx].append(node)
