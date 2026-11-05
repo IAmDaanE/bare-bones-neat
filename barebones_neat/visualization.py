@@ -2,16 +2,20 @@ import pygame
 from .utils import load_font
 from collections import defaultdict, deque
 
+from collections import defaultdict, deque
+
 def calculate_network_layers(inputs, outputs, connections):
     graph = defaultdict(list)
     for src, dst in connections:
         graph[src].append(dst)
     layers_dict = {node: 0 for node in inputs}
     queue = deque(inputs)
-    visited = set(inputs)
-    print("boutu start the while loop")
+    processed = set()
     while queue:
         current_node = queue.popleft()
+        if current_node in processed:
+            continue
+        processed.add(current_node)
         current_layer = layers_dict[current_node]
         for neighbor in graph[current_node]:
             if neighbor in inputs:
@@ -19,9 +23,8 @@ def calculate_network_layers(inputs, outputs, connections):
             new_layer = current_layer + 1
             if neighbor not in layers_dict or new_layer > layers_dict[neighbor]:
                 layers_dict[neighbor] = new_layer
-                if neighbor not in visited:
-                    queue.append(neighbor)
-    print("exited the while loop init")
+            if neighbor not in processed:
+                queue.append(neighbor) 
     all_nodes = set(inputs) | set(outputs) | {u for u, v in connections} | {v for u, v in connections}
     for node in all_nodes:
         if node not in layers_dict:
