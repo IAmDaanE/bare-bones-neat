@@ -45,8 +45,8 @@ class TrainingVisualization:
         pygame.draw.rect(self.screen, (0, 2, 61), (420, self.env_height, 2, self.screen.get_height() - self.env_height))
 
     def draw_network(self, compiled_genome, network_surface, hor_padding, vert_padding, method="stretched"):
-        width = 420
-        height = 140
+        width = network_surface.get_width()
+        height = network_surface.get_height()
         input_nodes = []
         output_nodes = []
         for node in compiled_genome.nodes:
@@ -117,7 +117,7 @@ class TrainingVisualization:
         self.screen.fill((255, 255, 255))
         network_surface = pygame.Surface((420, 140))
         network_surface.fill((255, 255, 255))
-        self.draw_network(compiled_genome, network_surface, 20, 20)
+        self.draw_network(compiled_genome, network_surface, 20, 20, method="proportional")
         info_surface = pygame.Surface((self.env_width - 420, 140))
         info_surface.fill((255, 255, 255))
         self.draw_info(neat_class, info_surface)
