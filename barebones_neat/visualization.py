@@ -19,7 +19,8 @@ def calculate_network_layers(inputs, outputs, connections):
             if neighbor not in layers_dict or new_layer > layers_dict[neighbor]:
                 layers_dict[neighbor] = new_layer
                 if neighbor not in visited:
-                    queue.append(neighbor) 
+                    queue.append(neighbor)
+    print("i exited the loop init")
     all_nodes = set(inputs) | set(outputs) | {u for u, v in connections} | {v for u, v in connections}
     for node in all_nodes:
         if node not in layers_dict:
@@ -117,7 +118,7 @@ class TrainingVisualization:
         self.screen.fill((255, 255, 255))
         network_surface = pygame.Surface((420, 140))
         network_surface.fill((255, 255, 255))
-        self.draw_network(compiled_genome, network_surface, 20, 20, method="proportional")
+        self.draw_network(compiled_genome, network_surface, 20, 20, method="stretched")
         info_surface = pygame.Surface((self.env_width - 420, 140))
         info_surface.fill((255, 255, 255))
         self.draw_info(neat_class, info_surface)
