@@ -61,7 +61,8 @@ class TrainingVisualization:
         layer_gap = (width - hor_padding * 2) / (amount_layers - 1)
         if method == "stretched":
             for q, layer in enumerate(layers):
-                node_gap = (height - 2 * vert_padding) / (len(layer) - 1) 
+                if len(layer) > 1:
+                    node_gap = (height - 2 * vert_padding) / (len(layer) - 1) 
                 for i, node in enumerate(layer):
                     x = hor_padding + layer_gap * q
                     y = 0
