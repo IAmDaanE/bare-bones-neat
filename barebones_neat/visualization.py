@@ -57,10 +57,10 @@ class TrainingVisualization:
         layers = calculate_network_layers(input_nodes, output_nodes, compiled_genome.conns)
         node_cords = {} # node id: (x, y)
         amount_layers = len(layers)
-        layer_gap = (width - hor_padding * 2) / amount_layers - 2
+        layer_gap = (width - hor_padding * 2) / (amount_layers - 1)
         if method == "stretched":
             for q, layer in enumerate(layers):
-                node_gap = (height - 2 * vert_padding) / len(layer) - 2
+                node_gap = (height - 2 * vert_padding) / (len(layer) - 1) 
                 for i, node in enumerate(layer):
                     x = hor_padding + layer_gap * q
                     y = 0
@@ -71,7 +71,7 @@ class TrainingVisualization:
                     node_cords[node] = (x, y)
         elif method == "proportional":
             biggest_layer_size = len(max(layers, key=len))
-            node_gap = (height - 2 * vert_padding) / biggest_layer_size - 2
+            node_gap = (height - 2 * vert_padding) / (biggest_layer_size - 1)
             for q, layer in enumerate(layers):
                 for i, node in enumerate(layer):
                     x = hor_padding + layer_gap * q
