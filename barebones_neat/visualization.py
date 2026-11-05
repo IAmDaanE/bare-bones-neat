@@ -9,6 +9,7 @@ def calculate_network_layers(inputs, outputs, connections):
     layers_dict = {node: 0 for node in inputs}
     queue = deque(inputs)
     visited = set(inputs)
+    print("boutu start the while loop")
     while queue:
         current_node = queue.popleft()
         current_layer = layers_dict[current_node]
@@ -20,7 +21,7 @@ def calculate_network_layers(inputs, outputs, connections):
                 layers_dict[neighbor] = new_layer
                 if neighbor not in visited:
                     queue.append(neighbor)
-    print("i exited the loop init")
+    print("exited the while loop init")
     all_nodes = set(inputs) | set(outputs) | {u for u, v in connections} | {v for u, v in connections}
     for node in all_nodes:
         if node not in layers_dict:
