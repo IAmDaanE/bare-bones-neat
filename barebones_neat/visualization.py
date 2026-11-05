@@ -103,7 +103,7 @@ class TrainingVisualization:
         similarity_treshold_text = self.font.render(f"Sim Treshold: {similarity_treshold}", True, (0, 2, 61))
         mutation_power = neat_class.mutation_power
         mutation_power_text = self.font.render(f"Mutation: {mutation_power}", True, (0, 2, 61))
-        new_node_chance  = neat_class.changes["new_node"]
+        new_node_chance  = neat_class.chances["new_node"]
         new_node_chance_text = self.font.render(f"Node Chance: {new_node_chance}", True, (0, 2, 61))
         side_padding = 6
         between_padding = 27
