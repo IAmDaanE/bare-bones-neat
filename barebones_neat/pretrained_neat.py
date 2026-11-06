@@ -2,7 +2,7 @@ from .compiled_genome import CompiledGenome
 import json
 
 class PreTrainedNEAT:
-    def __init__(model_location, use_softmax):
+    def __init__(self, model_location, use_softmax):
         conns_lib = {}
         weights_lib = {}
         biases_lib = {}

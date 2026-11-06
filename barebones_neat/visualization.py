@@ -41,11 +41,14 @@ def calculate_network_layers(inputs, outputs, connections):
     return nested_layers
 
 class TrainingVisualization:
-    def __init__(self, env_width, env_height, screen):
+    def __init__(self, env_width, env_height, screen, input_names, output_names):
         self.env_width = env_width
         self.env_height = env_height
         self.screen = screen
         self.font = load_font("JetBrainsMono-Regular", 16)
+        self.small_font = load_font("JetBrainsMono-Regular", 12)
+        self.input_names = input_names
+        self.output_names = output_names
 
     def draw_ui_shell(self):
         pygame.draw.rect(self.screen, (0, 2, 61), (0, self.env_height, self.screen.get_width(), 2))
@@ -101,8 +104,14 @@ class TrainingVisualization:
         node_radius = 6
         for node_id, cord in node_cords.items():
             pygame.draw.circle(network_surface, (0, 0, 0), cord, node_radius, width=2)
+        for i, text in enumerate(self.input_names):
+            text = self.small_font.render(text, True, (0, 2, 61))
+            network_surface.blit(text, (node_cords[input_nodes[i]][0] - 40, node_cords[input_nodes[i]][1] - 5))
+        for i, text in enumerate(self.output_names):
+            text = self.small_font.render(text, True, (0, 2, 61))
+            network_surface.blit(text, (node_cords[output_nodes[i]][0] - 40, node_cords[output_nodes[i]][1] - 5))
                     
-    def draw_info(self, neat_class, info_surface):
+    def draw_info(self, neat_class, info_surface, input_names, output_names):
         population_size = neat_class.population_size
         population_size_text = self.font.render(f"Population:  {population_size}", True, (0, 2, 61))
         amount_species = len(neat_class.species)
@@ -121,11 +130,11 @@ class TrainingVisualization:
         info_surface.blit(mutation_power_text, (8, side_padding + between_padding * 3))
         info_surface.blit(new_node_chance_text, (8, side_padding + between_padding * 4))
 
-    def full_draw(self, compiled_genome, neat_class):
+    def full_draw(self, compiled_genome, neat_class, network_hor_padding=60, network_vert_padding=20):
         self.screen.fill((255, 255, 255))
         network_surface = pygame.Surface((420, 140))
         network_surface.fill((255, 255, 255))
-        self.draw_network(compiled_genome, network_surface, 20, 20, method="stretched")
+        self.draw_network(compiled_genome, network_surface, network_hor_padding, network_vert_padding, method="stretched")
         info_surface = pygame.Surface((self.env_width - 420, 140))
         info_surface.fill((255, 255, 255))
         self.draw_info(neat_class, info_surface)
