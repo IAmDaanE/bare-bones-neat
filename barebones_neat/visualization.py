@@ -46,7 +46,7 @@ class TrainingVisualization:
         self.env_height = env_height
         self.screen = screen
         self.font = load_font("JetBrainsMono-Regular", 16)
-        self.small_font = load_font("JetBrainsMono-Regular", 12)
+        self.small_font = load_font("JetBrainsMono-Regular", 10)
         self.input_names = input_names
         self.output_names = output_names
 
