@@ -242,6 +242,7 @@ class NEAT:
         return highest_fitness_agent
         
     def save_model(self, model_path):
+        model_path.mkdir(parents=True, exist_ok=True)
         model = self.get_best_agent()
         conns = model["compiled_genome_class"].conns
         weights = model["compiled_genome_class"].weights
