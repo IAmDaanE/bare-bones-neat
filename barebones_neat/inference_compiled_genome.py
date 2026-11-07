@@ -26,7 +26,10 @@ class InferenceCompiledGenome:
         all_nodes = set()
         for integer, layertype in self.nodes:
             all_nodes.add(integer)
-        all_nodes.update(self.biases.keys())
+        bias_keys = self.biases.keys()
+        for i, key in enumerate(bias_keys):
+            bias_keys[i] = int(key)
+        all_nodes.update(bias_keys)
         node_values = {node_id: 0.0 for node_id in all_nodes}
         for i in range(self.input_size):
             node_id = i + 1
