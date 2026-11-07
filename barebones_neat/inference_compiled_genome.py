@@ -40,6 +40,7 @@ class InferenceCompiledGenome:
                 next_values[i + 1] = inputs[i]
             for from_node, to_node in self.conns:
                 signal = node_values[from_node] * self.weights[(from_node, to_node)]
+                self.conn_values[(from_node, to_node)] = signal
                 next_values[to_node] += signal
             for node_id in sorted_nodes:
                 if node_id > self.input_size:

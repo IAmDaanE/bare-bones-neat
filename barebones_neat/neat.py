@@ -1,5 +1,7 @@
 import random
 import math
+import json
+
 from .genome import Genome
 from .compiled_genome import CompiledGenome
 
@@ -228,3 +230,30 @@ class NEAT:
             baby_genome_class = baby_genome["genome_class"]
             baby_genome_class.mutate(self)     
         self.genome_pool.append(baby_genome_class)
+
+    def get_best_agent(self):
+        highest_fitness_agent = self.species[0][0]
+        highest_fitness = self.species[0][0]["fitness_score"]
+        for specie in self.species:
+            for agent in specie:
+                if agent["fitness_score"] > highest_fitness:
+                    highest_fitness_agent = agent
+                    highest_fitness = agent["fitness_score"]
+        return highest_fitness_agent
+        
+    def save_model(self, model_path):
+        model = self.get_best_agent()
+        conns = model["compiled_genome_class"].conns
+        weights = model["compiled_genome_class"].weights
+        biases = model["compiled_genome_class"].biases
+        nodes = model["compiled_genome_class"].nodes
+        with open(f"{model_path}/conns.json", "w") as f:
+            json.dump({"conns": conns}, f)
+        with open(f"{model_path}/weights.json", "w") as f:
+            json.dump({"conns": weights}, f)
+        with open(f"{model_path}/biases.json", "w") as f:
+            json.dump({"conns": biases}, f)
+        with open(f"{model_path}/nodes.json", "w") as f:
+            json.dump({"conns": nodes}, f)
+        with open(f"{model_path}/details.json", "w") as f:
+            json.dump({"use softmax": self.use_softmax}, f)
