@@ -244,17 +244,24 @@ class NEAT:
     def save_model(self, model_path):
         model_path.mkdir(parents=True, exist_ok=True)
         model = self.get_best_agent()
-        conns = model["compiled_genome_class"].conns
+        raw_conns = model["compiled_genome_class"].conns
+        conns = {}
+        for key, value in raw_conns.items():
+            conns[f"{key[0]}, {key[1]}"] = value
         weights = model["compiled_genome_class"].weights
         biases = model["compiled_genome_class"].biases
         nodes = model["compiled_genome_class"].nodes
-        with open(f"{model_path}/conns.json", "w") as f:
+        with open(model_path / "conns.json", "w") as f:
             json.dump({"conns": conns}, f)
-        with open(f"{model_path}/weights.json", "w") as f:
-            json.dump({"conns": weights}, f)
-        with open(f"{model_path}/biases.json", "w") as f:
-            json.dump({"conns": biases}, f)
-        with open(f"{model_path}/nodes.json", "w") as f:
-            json.dump({"conns": nodes}, f)
-        with open(f"{model_path}/details.json", "w") as f:
+
+        with open(model_path / "weights.json", "w") as f:
+            json.dump({"weights": weights}, f)
+
+        with open(model_path / "biases.json", "w") as f:
+            json.dump({"biases": biases}, f)
+
+        with open(model_path / "nodes.json", "w") as f:
+            json.dump({"nodes": nodes}, f)
+
+        with open(model_path / "details.json", "w") as f:
             json.dump({"use softmax": self.use_softmax}, f)
