@@ -264,4 +264,4 @@ class NEAT:
             json.dump({"nodes": nodes}, f)
 
         with open(model_path / "details.json", "w") as f:
-            json.dump({"use softmax": self.use_softmax}, f)
+            json.dump({"use_softmax": self.use_softmax}, f)
