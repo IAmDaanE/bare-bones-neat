@@ -23,7 +23,7 @@ class PreTrainedNEAT:
         weights = {}
         for key, value in raw_weights.items():
             splitted = key.split(",")
-            weights[(splitted[0], splitted[1])] = value
+            weights[(int(splitted[0]), int(splitted[1]))] = value
         biases = biases_lib["biases"]
         nodes = nodes_lib["nodes"]
         use_softmax = details_lib["use_softmax"]
