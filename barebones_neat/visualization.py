@@ -98,7 +98,7 @@ class TrainingVisualization:
             from_node = conn[0]
             to_node = conn[1]
             weight = compiled_genome.weights[conn]
-            line_thickness = max(1, int(abs(compiled_genome.conn_values[(from_node, to_node)]) * weight_mult))
+            line_thickness = max(1, int(abs(weight * weight_mult)))
             color = (0, 2, 61) if weight < 0 else (0, 134, 212)
             pygame.draw.line(network_surface, color, node_cords[from_node], node_cords[to_node], line_thickness)
         node_radius = 6
@@ -200,7 +200,7 @@ class InferenceVisualization:
             from_node = conn[0]
             to_node = conn[1]
             weight = compiled_genome.weights[conn]
-            line_thickness = max(1, int(abs(weight) * weight_mult))
+            line_thickness = max(1, int(abs(compiled_genome.conn_values[(from_node, to_node)]) * weight_mult))
             color = (0, 2, 61) if weight < 0 else (0, 134, 212)
             pygame.draw.line(network_surface, color, node_cords[from_node], node_cords[to_node], line_thickness)
         node_radius = 6
