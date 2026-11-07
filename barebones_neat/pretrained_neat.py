@@ -3,25 +3,34 @@ import json
 
 class PreTrainedNEAT:
     def __init__(self, model_location):
-        conns_lib = {}
-        weights_lib = {}
+        raw_conns_lib = {}
+        raw_weights_lib = {}
         biases_lib = {}
         nodes_lib = {}
-        with open(f"{model_location}/conns.json", "r") as f:
-            conns_lib = json.load(f)
-        with open(f"{model_location}/weights.json", "r") as f:
-            weights_lib = json.load(f)
-        with open(f"{model_location}/biases.json", "r") as f:
+        details_lib = {}
+        with open(model_location / "conns.json", "r") as f:
+            raw_conns_lib = json.load(f)
+        with open(model_location / "weights.json", "r") as f:
+            raw_weights_lib = json.load(f)
+        with open(model_location / "biases.json", "r") as f:
             biases_lib = json.load(f)
-        with open(f"{model_location}/nodes.json", "r") as f:
+        with open(model_location / "nodes.json", "r") as f:
             nodes_lib = json.load(f)
-        with open(f"{model_location}/details.json", "r") as f:
-            details = json.load(f)
-        conns = conns_lib["conns"]
-        weights = weights_lib["weights"]
+        with open(model_location / "details.json", "r") as f:
+            details_lib = json.load(f)
+        raw_conns = raw_conns_lib["conns"]
+        conns = {}
+        for key, value in raw_conns.items():
+            splitted = key.split(",")
+            conns[(splitted[0], splitted[1])] = value
+        raw_weights = raw_weights_lib["weights"]
+        weights = {}
+        for key, value in raw_weights.items():
+            splitted = key.split(",")
+            weights[(splitted[0], splitted[1])] = value
         biases = biases_lib["biases"]
         nodes = nodes_lib["nodes"]
-        use_softmax = details["use_softmax"]
+        use_softmax = details_lib["use_softmax"]
         self.compiled_genome = InferenceCompiledGenome(conns, weights, biases, use_softmax, nodes)
     
     def forward(self, inputs):

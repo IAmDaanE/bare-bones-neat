@@ -248,7 +248,10 @@ class NEAT:
         conns = {}
         for key, value in raw_conns.items():
             conns[f"{key[0]}, {key[1]}"] = value
-        weights = model["compiled_genome_class"].weights
+        raw_weights = model["compiled_genome_class"].weights
+        weights = {}
+        for key, value in raw_weights.items():
+            weights[f"{key[0]}, {key[1]}"] = value
         biases = model["compiled_genome_class"].biases
         nodes = model["compiled_genome_class"].nodes
         with open(model_path / "conns.json", "w") as f:
