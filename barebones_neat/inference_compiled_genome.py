@@ -23,7 +23,9 @@ class InferenceCompiledGenome:
         return [geexp / som_exp for geexp in exp_waarden]
 
     def forward(self, inputs):
-        all_nodes = set(self.nodes)
+        all_nodes = set()
+        for integer, layertype in self.nodes:
+            all_nodes.add(integer)
         all_nodes.update(self.biases.keys())
         node_values = {node_id: 0.0 for node_id in all_nodes}
         for i in range(self.input_size):
