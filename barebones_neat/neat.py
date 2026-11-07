@@ -244,10 +244,7 @@ class NEAT:
     def save_model(self, model_path):
         model_path.mkdir(parents=True, exist_ok=True)
         model = self.get_best_agent()
-        raw_conns = model["compiled_genome_class"].conns
-        conns = {}
-        for key, value in raw_conns.items():
-            conns[f"{key[0]}, {key[1]}"] = value
+        conns = model["compiled_genome_class"].conns
         raw_weights = model["compiled_genome_class"].weights
         weights = {}
         for key, value in raw_weights.items():

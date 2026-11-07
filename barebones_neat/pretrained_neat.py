@@ -18,11 +18,7 @@ class PreTrainedNEAT:
             nodes_lib = json.load(f)
         with open(model_location / "details.json", "r") as f:
             details_lib = json.load(f)
-        raw_conns = raw_conns_lib["conns"]
-        conns = {}
-        for key, value in raw_conns.items():
-            splitted = key.split(",")
-            conns[(splitted[0], splitted[1])] = value
+        conns = raw_conns_lib["conns"]
         raw_weights = raw_weights_lib["weights"]
         weights = {}
         for key, value in raw_weights.items():
