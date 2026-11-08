@@ -51,8 +51,8 @@ class TrainingVisualization:
         self.output_names = output_names
 
     def draw_ui_shell(self):
-        pygame.draw.rect(self.screen, (0, 2, 61), (0, self.env_height, self.screen.get_width(), 2))
-        pygame.draw.rect(self.screen, (0, 2, 61), (420, self.env_height, 2, self.screen.get_height() - self.env_height))
+        pygame.draw.rect(self.screen, (0, 0, 0), (0, self.env_height, self.screen.get_width(), 2))
+        pygame.draw.rect(self.screen, (0, 0, 0), (420, self.env_height, 2, self.screen.get_height() - self.env_height))
 
     def draw_network(self, compiled_genome, network_surface, hor_padding, vert_padding, left_names_offset, right_names_offset, vert_names_offset, method="stretched", weight_mult=7, max_line_thickness=35):
         width = network_surface.get_width()
@@ -153,8 +153,8 @@ class InferenceVisualization:
         self.output_names = output_names
 
     def draw_ui_shell(self):
-        pygame.draw.rect(self.screen, (0, 2, 61), (0, self.env_height, self.screen.get_width(), 2))
-        pygame.draw.rect(self.screen, (0, 2, 61), (420, self.env_height, 2, self.screen.get_height() - self.env_height))
+        pygame.draw.rect(self.screen, (0, 0, 0), (0, self.env_height, self.screen.get_width(), 2))
+        pygame.draw.rect(self.screen, (0, 0, 0), (420, self.env_height, 2, self.screen.get_height() - self.env_height))
 
     def draw_network(self, compiled_genome, network_surface, hor_padding, vert_padding, left_names_offset, right_names_offset, vert_names_offset, method="stretched", weight_mult=7, max_line_thickness=35):
         width = network_surface.get_width()
@@ -207,23 +207,23 @@ class InferenceVisualization:
         for node_id, cord in node_cords.items():
             pygame.draw.circle(network_surface, (0, 0, 0), cord, node_radius)
         for i, text in enumerate(self.input_names):
-            text = self.small_font.render(text, True, (0, 2, 61))
+            text = self.small_font.render(text, True, (9, 7, 104))
             network_surface.blit(text, (node_cords[input_nodes[i]][0] - left_names_offset, node_cords[input_nodes[i]][1] - vert_names_offset))
         for i, text in enumerate(self.output_names):
-            text = self.small_font.render(text, True, (0, 2, 61))
+            text = self.small_font.render(text, True, (9, 7, 104))
             network_surface.blit(text, (node_cords[output_nodes[i]][0] + right_names_offset, node_cords[output_nodes[i]][1] - vert_names_offset))
                     
     def draw_info(self, compiled_genome, info_surface):
         amount_nodes = len(compiled_genome.nodes)
-        amount_nodes_text = self.font.render(f"Amount Nodes:  {amount_nodes}", True, (0, 2, 61))
+        amount_nodes_text = self.font.render(f"Amount Nodes:  {amount_nodes}", True, (9, 7, 104))
         input_size = compiled_genome.input_size
-        input_size_text = self.font.render(f"Input Size:  {input_size}", True, (0, 2, 61))
+        input_size_text = self.font.render(f"Input Size:  {input_size}", True, (9, 7, 104))
         output_size = compiled_genome.output_size
-        output_size_text = self.font.render(f"Output Size:  {output_size}", True, (0, 2, 61))
+        output_size_text = self.font.render(f"Output Size:  {output_size}", True, (9, 7, 104))
         amount_conns = len(compiled_genome.conns)
-        amount_conns_text = self.font.render(f"Amount Conns:  {amount_conns}", True, (0, 2, 61))
+        amount_conns_text = self.font.render(f"Amount Conns:  {amount_conns}", True, (9, 7, 104))
         use_softmax  = compiled_genome.use_softmax
-        use_softmax_text = self.font.render(f"Use Softmax:  {use_softmax}", True, (0, 2, 61))
+        use_softmax_text = self.font.render(f"Use Softmax:  {use_softmax}", True, (9, 7, 104))
         side_padding = 6
         between_padding = 27
         info_surface.blit(amount_nodes_text, (8, side_padding))
