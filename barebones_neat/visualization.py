@@ -54,7 +54,7 @@ class TrainingVisualization:
         pygame.draw.rect(self.screen, (0, 2, 61), (0, self.env_height, self.screen.get_width(), 2))
         pygame.draw.rect(self.screen, (0, 2, 61), (420, self.env_height, 2, self.screen.get_height() - self.env_height))
 
-    def draw_network(self, compiled_genome, network_surface, hor_padding, vert_padding, left_names_offset, right_names_offset, vert_names_offset, method="stretched", weight_mult=7):
+    def draw_network(self, compiled_genome, network_surface, hor_padding, vert_padding, left_names_offset, right_names_offset, vert_names_offset, method="stretched", weight_mult=7, max_line_thickness=35):
         width = network_surface.get_width()
         height = network_surface.get_height()
         input_nodes = []
@@ -98,12 +98,12 @@ class TrainingVisualization:
             from_node = conn[0]
             to_node = conn[1]
             weight = compiled_genome.weights[conn]
-            line_thickness = max(1, int(abs(weight * weight_mult)))
+            line_thickness = min(max(1, int(abs(weight * weight_mult))), max_line_thickness)
             color = (0, 2, 61) if weight < 0 else (0, 134, 212)
             pygame.draw.line(network_surface, color, node_cords[from_node], node_cords[to_node], line_thickness)
         node_radius = 6
         for node_id, cord in node_cords.items():
-            pygame.draw.circle(network_surface, (0, 0, 0), cord, node_radius, width=2)
+            pygame.draw.circle(network_surface, (0, 0, 0), cord, node_radius)
         for i, text in enumerate(self.input_names):
             text = self.small_font.render(text, True, (0, 2, 61))
             network_surface.blit(text, (node_cords[input_nodes[i]][0] - left_names_offset, node_cords[input_nodes[i]][1] - vert_names_offset))
@@ -113,15 +113,15 @@ class TrainingVisualization:
                     
     def draw_info(self, neat_class, info_surface):
         population_size = neat_class.population_size
-        population_size_text = self.font.render(f"Population:  {population_size}", True, (0, 2, 61))
+        population_size_text = self.font.render(f"Population:  {population_size}", True, (0, 134, 212))
         amount_species = len(neat_class.species)
-        amount_species_text = self.font.render(f"Amount Species:  {amount_species}", True, (0, 2, 61))
+        amount_species_text = self.font.render(f"Amount Species:  {amount_species}", True, (0, 134, 212))
         similarity_treshold = neat_class.similarity_treshold
-        similarity_treshold_text = self.font.render(f"Sim Treshold:  {similarity_treshold}", True, (0, 2, 61))
+        similarity_treshold_text = self.font.render(f"Sim Treshold:  {similarity_treshold}", True, (0, 134, 212))
         mutation_power = neat_class.mutation_power
-        mutation_power_text = self.font.render(f"Mutation:  {mutation_power}", True, (0, 2, 61))
+        mutation_power_text = self.font.render(f"Mutation:  {mutation_power}", True, (0, 134, 212))
         new_node_chance  = neat_class.chances["new_node"]
-        new_node_chance_text = self.font.render(f"Node Chance:  {new_node_chance}%", True, (0, 2, 61))
+        new_node_chance_text = self.font.render(f"Node Chance:  {new_node_chance}%", True, (0, 134, 212))
         side_padding = 6
         between_padding = 27
         info_surface.blit(population_size_text, (8, side_padding))
@@ -156,7 +156,7 @@ class InferenceVisualization:
         pygame.draw.rect(self.screen, (0, 2, 61), (0, self.env_height, self.screen.get_width(), 2))
         pygame.draw.rect(self.screen, (0, 2, 61), (420, self.env_height, 2, self.screen.get_height() - self.env_height))
 
-    def draw_network(self, compiled_genome, network_surface, hor_padding, vert_padding, left_names_offset, right_names_offset, vert_names_offset, method="stretched", weight_mult=7):
+    def draw_network(self, compiled_genome, network_surface, hor_padding, vert_padding, left_names_offset, right_names_offset, vert_names_offset, method="stretched", weight_mult=7, max_line_thickness=35):
         width = network_surface.get_width()
         height = network_surface.get_height()
         input_nodes = []
@@ -200,12 +200,12 @@ class InferenceVisualization:
             from_node = conn[0]
             to_node = conn[1]
             weight = compiled_genome.weights[(from_node, to_node)]
-            line_thickness = max(1, int(abs(compiled_genome.conn_values[(from_node, to_node)]) * weight_mult))
+            line_thickness = min(max(1, int(abs(compiled_genome.conn_values[(from_node, to_node)]) * weight_mult)), max_line_thickness)
             color = (0, 2, 61) if weight < 0 else (0, 134, 212)
             pygame.draw.line(network_surface, color, node_cords[from_node], node_cords[to_node], line_thickness)
         node_radius = 6
         for node_id, cord in node_cords.items():
-            pygame.draw.circle(network_surface, (0, 0, 0), cord, node_radius, width=2)
+            pygame.draw.circle(network_surface, (0, 0, 0), cord, node_radius)
         for i, text in enumerate(self.input_names):
             text = self.small_font.render(text, True, (0, 2, 61))
             network_surface.blit(text, (node_cords[input_nodes[i]][0] - left_names_offset, node_cords[input_nodes[i]][1] - vert_names_offset))
@@ -232,11 +232,11 @@ class InferenceVisualization:
         info_surface.blit(amount_conns_text, (8, side_padding + between_padding * 3))
         info_surface.blit(use_softmax_text, (8, side_padding + between_padding * 4))
 
-    def full_draw(self, compiled_genome, neat_class, network_hor_padding=60, network_vert_padding=20, left_names_offset=50, right_names_offset=8, vert_names_offset=5, network_weight_mult=7):
+    def full_draw(self, compiled_genome, neat_class, network_hor_padding=60, network_vert_padding=20, left_names_offset=50, right_names_offset=8, vert_names_offset=5, network_weight_mult=7, max_line_thickness=35):
         self.screen.fill((255, 255, 255))
         network_surface = pygame.Surface((420, 140))
         network_surface.fill((255, 255, 255))
-        self.draw_network(compiled_genome, network_surface, network_hor_padding, network_vert_padding, left_names_offset, right_names_offset, vert_names_offset, method="stretched", weight_mult=network_weight_mult)
+        self.draw_network(compiled_genome, network_surface, network_hor_padding, network_vert_padding, left_names_offset, right_names_offset, vert_names_offset, method="stretched", weight_mult=network_weight_mult, max_line_thickness=max_line_thickness)
         info_surface = pygame.Surface((self.env_width - 420, 140))
         info_surface.fill((255, 255, 255))
         self.draw_info(compiled_genome, info_surface)
