@@ -7,6 +7,10 @@ I used this library in some of my projects:
 
 ---
 
+<img width="1050" height="854" alt="Schermafbeelding 2026-11-08 110816" src="https://github.com/user-attachments/assets/0d5e4825-9ffd-4b10-822e-ec33b10d5774" />
+
+*the visualization window in ai-simple-steering*
+
 ## About the Project
 
 It has very nice visualizations for training and inference, made with pygame-ce
