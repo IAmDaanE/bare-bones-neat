@@ -105,23 +105,23 @@ class TrainingVisualization:
         for node_id, cord in node_cords.items():
             pygame.draw.circle(network_surface, (0, 0, 0), cord, node_radius)
         for i, text in enumerate(self.input_names):
-            text = self.small_font.render(text, True, (0, 2, 61))
+            text = self.small_font.render(text, True, (9, 7, 104))
             network_surface.blit(text, (node_cords[input_nodes[i]][0] - left_names_offset, node_cords[input_nodes[i]][1] - vert_names_offset))
         for i, text in enumerate(self.output_names):
-            text = self.small_font.render(text, True, (0, 2, 61))
+            text = self.small_font.render(text, True, (9, 7, 104))
             network_surface.blit(text, (node_cords[output_nodes[i]][0] + right_names_offset, node_cords[output_nodes[i]][1] - vert_names_offset))
                     
     def draw_info(self, neat_class, info_surface):
         population_size = neat_class.population_size
-        population_size_text = self.font.render(f"Population:  {population_size}", True, (0, 134, 212))
+        population_size_text = self.font.render(f"Population:  {population_size}", True, (9, 7, 104))
         amount_species = len(neat_class.species)
-        amount_species_text = self.font.render(f"Amount Species:  {amount_species}", True, (0, 134, 212))
+        amount_species_text = self.font.render(f"Amount Species:  {amount_species}", True, (9, 7, 104))
         similarity_treshold = neat_class.similarity_treshold
-        similarity_treshold_text = self.font.render(f"Sim Treshold:  {similarity_treshold}", True, (0, 134, 212))
+        similarity_treshold_text = self.font.render(f"Sim Treshold:  {similarity_treshold}", True, (9, 7, 104))
         mutation_power = neat_class.mutation_power
-        mutation_power_text = self.font.render(f"Mutation:  {mutation_power}", True, (0, 134, 212))
+        mutation_power_text = self.font.render(f"Mutation:  {mutation_power}", True, (9, 7, 104))
         new_node_chance  = neat_class.chances["new_node"]
-        new_node_chance_text = self.font.render(f"Node Chance:  {new_node_chance}%", True, (0, 134, 212))
+        new_node_chance_text = self.font.render(f"Node Chance:  {new_node_chance}%", True, (9, 7, 104))
         side_padding = 6
         between_padding = 27
         info_surface.blit(population_size_text, (8, side_padding))
