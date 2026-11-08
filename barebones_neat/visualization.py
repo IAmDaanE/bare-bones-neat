@@ -239,7 +239,7 @@ class InferenceVisualization:
         self.draw_network(compiled_genome, network_surface, network_hor_padding, network_vert_padding, left_names_offset, right_names_offset, vert_names_offset, method="stretched", weight_mult=network_weight_mult)
         info_surface = pygame.Surface((self.env_width - 420, 140))
         info_surface.fill((255, 255, 255))
-        self.draw_info(neat_class, info_surface)
+        self.draw_info(compiled_genome, info_surface)
         self.screen.blit(network_surface, (0, self.env_height))
         self.screen.blit(info_surface, (420, self.env_height))
         self.draw_ui_shell()
