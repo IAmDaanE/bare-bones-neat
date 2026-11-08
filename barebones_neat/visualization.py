@@ -130,11 +130,11 @@ class TrainingVisualization:
         info_surface.blit(mutation_power_text, (8, side_padding + between_padding * 3))
         info_surface.blit(new_node_chance_text, (8, side_padding + between_padding * 4))
 
-    def full_draw(self, compiled_genome, neat_class, network_hor_padding=60, network_vert_padding=20, left_names_offset=50, right_names_offset=8, vert_names_offset=5, network_weight_mult=7):
+    def full_draw(self, compiled_genome, neat_class, network_hor_padding=60, network_vert_padding=20, left_names_offset=50, right_names_offset=8, vert_names_offset=5, network_weight_mult=7, max_line_thickness=35):
         self.screen.fill((255, 255, 255))
         network_surface = pygame.Surface((420, 140))
         network_surface.fill((255, 255, 255))
-        self.draw_network(compiled_genome, network_surface, network_hor_padding, network_vert_padding, left_names_offset, right_names_offset, vert_names_offset, method="stretched", weight_mult=network_weight_mult)
+        self.draw_network(compiled_genome, network_surface, network_hor_padding, network_vert_padding, left_names_offset, right_names_offset, vert_names_offset, method="stretched", weight_mult=network_weight_mult, max_line_thickness=max_line_thickness)
         info_surface = pygame.Surface((self.env_width - 420, 140))
         info_surface.fill((255, 255, 255))
         self.draw_info(neat_class, info_surface)
