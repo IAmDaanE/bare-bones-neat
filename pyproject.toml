@@ -11,3 +11,4 @@ where = ["."]
 [project]
 name = "barebones_neat"
 version = "1.5.3"
+dependencies = ["pygame-ce"]
